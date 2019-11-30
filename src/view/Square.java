@@ -1,20 +1,39 @@
 package view;
 
-import java.awt.Color;
+import java.awt.*;
+
+import graphicLayer.GElement;
 import graphicLayer.GOval;
 import graphicLayer.GRect;
 
 public class Square extends GRect{
-  private GOval ant;
+
+  private GElement icon;
+  private int tileSize;
+
+  public Square(int x, int y, int tileSize){
+    this.tileSize = tileSize;
+    this.setPosition(new Point(x * tileSize, y * tileSize));
+    this.setDimension(new Dimension(tileSize, tileSize));
+    this.setColor(Color.white);
+    this.setBorderColor(Color.lightGray);
+    this.setBorderWidth(1);
+  }
+
   public void addAnt() {
-    if(ant == null) {
-      this.ant = new GOval();
-    }
-    this.ant.setColor(Color.red);
+    removeAnt();
+    /*if(icon == null) {
+      this.icon = new GOval();
+    }*/
+    GOval ant =  new GOval();
+    ant.setColor(Color.red);
+    ant.setDimension(this.getDimension());
+    this.icon = ant;
     this.addSubElement(ant);
+
   }
   public void removeAnt() {
-    if(this.ant == null)return;
-    this.removeSubElement(this.ant);
+    if(this.icon == null)return;
+    this.removeSubElement(this.icon);
   }
 }

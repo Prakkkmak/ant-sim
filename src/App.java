@@ -1,16 +1,17 @@
-import java.awt.Dimension;
 import java.util.Date;
-import java.util.Timer;
-import graphicLayer.GSpace;
+
+import model.data.Species;
 import view.View;
-import world.World;
+import model.world.World;
 
 public class App {
 
   public static void main(String[] args) {
-    World world = new World(100,100);
-    //world.addEntity(,5, 5);
-    world.createSoldier(2, 2);
+
+    World world = new World(500,500);
+    //model.world.addEntity(,5, 5);
+    world.createWorker(100, 100);
+    world.createWorker(50, 50);
     View view = new View(world);
     view.update();
     

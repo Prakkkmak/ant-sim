@@ -8,4 +8,5 @@ public abstract class AntRole extends Role {
   public void action(Ant ant){
     return;
   }
+  public int getId(){ return 1; }
 }

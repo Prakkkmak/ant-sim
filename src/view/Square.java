@@ -14,26 +14,32 @@ public class Square extends GRect{
   public Square(int x, int y, int tileSize){
     this.tileSize = tileSize;
     this.setPosition(new Point(x * tileSize, y * tileSize));
-    this.setDimension(new Dimension(tileSize, tileSize));
+    this.setDimension(new Dimension(this.tileSize, this.tileSize));
     this.setColor(Color.white);
     this.setBorderColor(Color.lightGray);
     this.setBorderWidth(1);
   }
 
   public void addAnt() {
-    removeAnt();
-    /*if(icon == null) {
-      this.icon = new GOval();
-    }*/
+    removeIcon();
     GOval ant =  new GOval();
     ant.setColor(Color.red);
     ant.setDimension(this.getDimension());
     this.icon = ant;
     this.addSubElement(ant);
-
   }
-  public void removeAnt() {
-    if(this.icon == null)return;
+
+  public void addQueen(){
+    removeIcon();
+    GRect queen = new GRect();
+    queen.setColor(Color.black);
+    queen.setDimension(this.getDimension());
+    this.icon = queen;
+    this.addSubElement(queen);
+  }
+
+  public void removeIcon() {
+    if(this.icon == null) return;
     this.removeSubElement(this.icon);
   }
 }

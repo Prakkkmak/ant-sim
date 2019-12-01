@@ -5,6 +5,10 @@ import model.entities.Ant;
 
 public class Garbage extends State{
 
+  public Garbage(){
+    System.out.println("Garbage created ");
+  }
+
   @Override
   public State evolve() {
     return null;
@@ -12,8 +16,7 @@ public class Garbage extends State{
 
   @Override
   public void action(Ant ant) {
-    // TODO Auto-generated method stub
-    
+
   }
 
 }

@@ -4,6 +4,7 @@ import model.abstracts.EntityTile;
 import model.abstracts.Role;
 import model.interfaces.IAction;
 import model.interfaces.IEntityTile;
+import model.interfaces.IVisitor;
 import model.roles.Wild;
 import model.world.Tile;
 
@@ -29,4 +30,13 @@ public class Prey extends EntityTile {
         role.action(this);
     }
 
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public int getId() {
+        return 10;
+    }
 }

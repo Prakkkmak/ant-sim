@@ -10,11 +10,4 @@ public class Nymph extends State{
     return new Mature();
   }
 
-  @Override
-  public void action(Ant ant) {
-    if(ant.getAge().getDay() > ant.getSpecies().getGrowth(this)){
-      evolve();
-    }
-  }
-
 }

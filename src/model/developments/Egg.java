@@ -10,11 +10,4 @@ public class Egg extends State{
     return new Larva();
   }
 
-  @Override
-  public void action(Ant ant) {
-    if(ant.getAge().getDay() > ant.getSpecies().getGrowth(this)){
-      evolve();
-    }
-  }
-
 }

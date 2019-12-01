@@ -13,6 +13,7 @@ public class Container extends GBounded {
         this.world = world;
         this.setColor(Color.white);
         this.setDimension(new Dimension(1000,1000));
+        this.createGrid();
     }
 
     public void createGrid() {
@@ -30,13 +31,21 @@ public class Container extends GBounded {
     public void updateGrid() {
         for(int i = 0; i < this.grid.length; i++) {
             for (int j = 0; j < this.grid[i].length; j++) {
+                int pheromoneRate = this.world.getPheromoneConcentration(i,j);
+                pheromoneRate = (int) pheromoneRate / 5;
+                if(pheromoneRate < 0) pheromoneRate = 0;
+                if(pheromoneRate > 254) pheromoneRate = 254;
+                Color c = new Color(254 - pheromoneRate, 254, 254 - pheromoneRate);
+                this.grid[i][j].setColor(c);
                 int content = this.world.getTileContent(i, j);
                 if(content == 0) {
-                    this.grid[i][j].removeAnt();
+                    this.grid[i][j].removeIcon();
                 }
                 else if(content == 1) {
-                    System.out.println("Ant en " + i + " " + j);
                     this.grid[i][j].addAnt();
+                }
+                else if(content == 9){
+                    this.grid[i][j].addQueen();
                 }
             }
         }

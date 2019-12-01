@@ -1,21 +1,26 @@
 package model.world;
 
 import model.data.Species;
+import model.developments.Egg;
 import model.entities.Ant;
 import model.factories.AntFactory;
 import model.factories.SpeciesFactory;
 import model.interfaces.IEntityTile;
 import model.interfaces.ITickable;
+import model.interfaces.IVisitable;
+import model.interfaces.IVisitor;
 import model.roles.Queen;
 import model.roles.Soldier;
 import model.roles.Worker;
+import model.visitors.AntCounterVisitor;
 
 /**
  * The model.world is where the sim append. It's a list of tiles.
  * @author lostanth
  *
  */
-public class World implements ITickable{
+public class World implements ITickable {
+  private Time date;
   /**
    * Tiles composes the model.world.
    */
@@ -29,6 +34,7 @@ public class World implements ITickable{
   public World(int sizeX, int sizeY) {
     Species species = SpeciesFactory.CreateDefaultSpecies();
     this.antFactory = new AntFactory(species);
+    this.date = new Time();
     this.tiles = new Tile[sizeX][sizeY];
     for(int i = 0; i < this.tiles.length; i++) {
       for(int j = 0; j < this.tiles[i].length; j++) {
@@ -59,6 +65,16 @@ public class World implements ITickable{
   public int getTileContent(int x, int y) {
     return this.tiles[x][y].getContent();
   }
+  public int getPheromoneConcentration(int x, int y){ return this.tiles[x][y].getPheromoneConcentration(); }
+  /**
+   * Create a soldier at specific coords.
+   * @param x Position X.
+   * @param y Position Y.
+   */
+  public void createEgg(int x, int y) {
+    Ant ant = antFactory.createAnt(new Egg());
+    this.addEntity(ant, x, y);
+  }
 
   /**
    * Create a soldier at specific coords.
@@ -88,6 +104,7 @@ public class World implements ITickable{
   public void createQueen(int x, int y) {
     Ant ant = antFactory.createAnt(new Queen());
     this.addEntity(ant, x, y);
+    this.tiles[x][y].addFood(100000);
   }
   
   /**
@@ -95,6 +112,7 @@ public class World implements ITickable{
    */
   @Override
   public void onMinutePass(int tick) {
+    date.onMinutePass(tick);
     for(int i = 0; i < this.tiles.length; i++) {
       for(int j = 0; j < this.tiles[i].length; j++) {
         this.tiles[i][j].onMinutePass(tick);
@@ -123,4 +141,23 @@ public class World implements ITickable{
     }
     this.tiles[x][y].addEntity(entity);
   }
+
+  public int getAntCount(){
+    AntCounterVisitor visitor = new AntCounterVisitor();
+    for (Tile[] tiles : this.tiles) {
+      for (Tile tile : tiles) {
+        tile.accept(visitor);
+      }
+    }
+    return visitor.getAntCount();
+  }
+
+  public int getDays(){
+    return this.date.getDay();
+  }
+
+  public Tile getTile(int x, int y){
+    return this.tiles[x][y];
+  }
+
 }

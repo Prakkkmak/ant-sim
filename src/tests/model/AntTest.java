@@ -53,9 +53,9 @@ class AntTest {
         Species species = this.ant.getSpecies();
         State state = this.ant.getState();
         int growTime =  species.getGrowth(state);
-        for(int i = 0; i < growTime * 24 * 60 + 1; i++){
-            this.ant.update();
+        for(int i = 0; i < growTime + 10; i++){
             this.ant.getAge().onMinutePass(i);
+            this.ant.update();
         }
         assertEquals(new Larva(), this.ant.getState());
     }

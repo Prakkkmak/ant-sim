@@ -10,11 +10,17 @@ public class Larva extends State{
     return new Nymph();
   }
 
+  /**
+   * The larva eat this weight when she have low food.
+   * @param ant The ant who is larva.
+   */
   @Override
   public void action(Ant ant) {
-    if(ant.getAge().getDay() > ant.getSpecies().getGrowth(this)){
-      evolve();
+    int currentFood = ant.getFood();
+    if(currentFood < ant.getSpecies().getFoodConsumption()){
+      //ant.consume(ant.getSpecies().getWeight());
     }
+    super.action(ant);
   }
 
 }

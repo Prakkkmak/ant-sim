@@ -2,6 +2,7 @@ package model.data;
 
 import model.abstracts.AntRole;
 import model.abstracts.State;
+import model.world.Pheromone;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
  * A species contains all the data of a an ant evolution. Each species have a specific behavior.
  */
 public class Species {
+    //TODO Add all states and role to the specie.
     /**
      * Name of the species.
      */
@@ -35,6 +37,8 @@ public class Species {
      */
     private Map<AntRole, Integer> ratios;
 
+    private Pheromone pheromone;
+
     /**
      * Default species constructor.
      */
@@ -45,6 +49,7 @@ public class Species {
         this.stamina = stamina;
         this.growths = new HashMap<>();
         this.ratios = new HashMap<>();
+        this.pheromone = new Pheromone();
     }
 
     public String getName(){
@@ -53,6 +58,10 @@ public class Species {
 
     public int getWeight(){
         return this.weight;
+    }
+
+    public int getFoodConsumption(){
+        return (this.getWeight() / 3);
     }
 
     public int getTerritory(){
@@ -66,19 +75,36 @@ public class Species {
     /**
      * Set the growth of a specific state.
      * @param state The state.
-     * @param growthDay Growth time in days.
+     * @param growth Growth time in minutes.
      */
-    public void setGrowth(State state , int growthDay){
-        this.growths.put(state, growthDay * 24);
+    public void setGrowth(State state , int growth){
+        for (Map.Entry<State, Integer > e : this.growths.entrySet()){
+            if(e.getKey().equals(state)) {
+                e.setValue(growth);
+                return;
+            }
+        }
+        this.growths.put(state, growth);
+    }
+    /**
+     * Set the growth of a specific state.
+     * @param state The state.
+     * @param growthDays Growth time in days.
+     */
+    public void setGrowthDays(State state , int growthDays){
+        this.setGrowth(state, growthDays * 60 * 24);
     }
 
     /**
      * Get the growth time of a specific state.
      * @param state The state.
-     * @return The time in days.
+     * @return The time in minutes.
      */
     public int getGrowth(State state){
-        return this.growths.get(state) / 24;
+        for (Map.Entry<State, Integer > e : this.growths.entrySet()){
+            if(e.getKey().equals(state)) return e.getValue();
+        }
+        return 0;
     }
 
 
@@ -88,6 +114,12 @@ public class Species {
      * @param ratio The ratio.
      */
     public void setRatio(AntRole role, int ratio){
+        for (Map.Entry<AntRole, Integer > e : this.ratios.entrySet()){
+            if(e.getKey().equals(role)) {
+                e.setValue(ratio);
+                return;
+            }
+        }
         this.ratios.put(role, ratio);
     }
 
@@ -98,7 +130,10 @@ public class Species {
      * for get the real ratio.
      */
     public int getRatio(AntRole role){
-        return this.ratios.get(role);
+        for (Map.Entry<AntRole, Integer > e : this.ratios.entrySet()){
+            if(e.getKey().equals(role)) return e.getValue();
+        }
+        return 0;
     }
 
     /**
@@ -113,12 +148,15 @@ public class Species {
         return total;
     }
 
+    public Pheromone getPheromone(){
+        return this.pheromone;
+    }
     /**
      * Get the ratio reported to ratio/1 for the specific role.
      * @param role The role to find the ratio.
      * @return The resulted ratio 0 < ratio < 1
      */
     public double getRealRatio(AntRole role){
-        return ratios.get(role) / (double) getTotalRatio();
+        return this.getRatio(role) / (double) getTotalRatio();
     }
 }

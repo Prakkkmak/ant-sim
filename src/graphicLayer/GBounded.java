@@ -84,10 +84,15 @@ public  class GBounded extends GElement implements GContainer{
 		g.setClip(getX(), getY(), getWidth(), getHeight());
 		g.translate(getX(), getY());
 		Iterator<GElement> itor = subElements.iterator();
-		while (itor.hasNext()) {
+		GElement[] subElementsArray = new GElement[subElements.size()];
+		subElements.toArray(subElementsArray);
+		for(int i = 0; i < subElementsArray.length; i++){
+			if(subElementsArray[i] != null) subElementsArray[i].draw(g);
+		}
+		/*while (itor.hasNext()) {
 			GElement m = itor.next();
 			m.draw(g);
-		}
+		}*/
 		g.translate(-getX(), -getY());
 		g.setClip(currentClip);
 	}

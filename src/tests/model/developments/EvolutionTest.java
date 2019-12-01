@@ -20,11 +20,11 @@ class EvolutionTest {
     @Test
     void testEvolveToMature() {
         assertTrue(state instanceof Egg);
-        state.evolve();
+        this.state = state.evolve();
         assertTrue(state instanceof Larva);
-        state.evolve();
+        this.state = state.evolve();
         assertTrue(state instanceof Nymph);
-        state.evolve();
+        this.state = state.evolve();
         assertTrue(state instanceof Mature);
     }
 

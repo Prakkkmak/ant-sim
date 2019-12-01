@@ -43,6 +43,7 @@ public abstract class  EntityTile implements IEntityTile {
             return;
         }
         lastAction = tick;
+        age.onMinutePass(tick);
         this.update();
     }
 

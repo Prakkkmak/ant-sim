@@ -74,6 +74,7 @@ public class Tile implements ITickable, IVisitable {
   }
 
   /**
+   * TODO Change name.
    * Get content of the world. Contents are stored in ESprite.
    * @return The content identifier.
    */
@@ -98,8 +99,13 @@ public class Tile implements ITickable, IVisitable {
    * @param entity The entity to add.
    */
   public void addEntity(IEntityTile entity) {
-    entities.add(entity);
+    this.entities.add(entity);
     entity.setTile(this);
+  }
+  
+  public void removeEntity(IEntityTile entity) {
+    this.entities.remove(entity);
+    entity.setTile(null);
   }
 
   /**
@@ -234,13 +240,14 @@ public class Tile implements ITickable, IVisitable {
       entity.onMinutePass(tick);
     }
     for(Map.Entry<Pheromone, Integer> pheromone : pheromones.entrySet()){
+      //TODO improve readibility
       int volatility = pheromone.getKey().getVolatility();
       int value = pheromone.getValue();
       pheromone.setValue(value - volatility);
       if(pheromone.getValue() < 0) pheromone.setValue(0);
     }
   }
-  
+
   @Override
   public void accept(IVisitor visitor) {
     visitor.visit(this);

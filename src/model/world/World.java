@@ -92,7 +92,7 @@ public class World implements ITickable {
    * @param y Position Y.
    */
   public void createWorker(int x, int y) {
-    Ant ant = antFactory.createAnt(new Worker());
+    Ant ant = antFactory.createAnt(this.tiles[x][y], new Worker());
     this.addEntity(ant, x, y);
   }
 

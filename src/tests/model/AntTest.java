@@ -36,6 +36,7 @@ class AntTest {
 
     @Test
     void testGetSetRole() {
+      
         assertNull(this.ant.getRole());
         assertEquals(new Worker(), this.ant2.getRole());
         this.ant2.setRole(new Soldier());

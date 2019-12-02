@@ -32,7 +32,7 @@ public class Container extends GBounded {
         for(int i = 0; i < this.grid.length; i++) {
             for (int j = 0; j < this.grid[i].length; j++) {
                 int pheromoneRate = this.world.getPheromoneConcentration(i,j);
-                pheromoneRate = (int) pheromoneRate / 5;
+                pheromoneRate = (int) pheromoneRate;
                 if(pheromoneRate < 0) pheromoneRate = 0;
                 if(pheromoneRate > 254) pheromoneRate = 254;
                 Color c = new Color(254 - pheromoneRate, 254, 254 - pheromoneRate);

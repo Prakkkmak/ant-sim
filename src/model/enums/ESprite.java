@@ -5,8 +5,10 @@ public enum ESprite {
     WORKER(1),
     SOLDIER(2),
     SEXUAL(3),
-    QUEEN(10),
-    GARBAGE(20);
+    PREY(8),
+    GARBAGE(9),
+    QUEEN(10);
+    
     private int value;
     private ESprite(int value) {
         this.value = value;

@@ -28,6 +28,7 @@ public class Species {
      * Time she can stay outside.
      */
     private int stamina;
+    
     /**
      * Growth times in hours.
      */
@@ -36,9 +37,12 @@ public class Species {
      * Ratio of ant in this specie. The queen try to have the good amount of ant/total ratios
      */
     private Map<AntRole, Integer> ratios;
-
+    
+    /**
+     * Pheromone of a ant.
+     */
     private Pheromone pheromone;
-
+    
     /**
      * Default species constructor.
      */
@@ -55,11 +59,11 @@ public class Species {
     public String getName(){
         return this.name;
     }
-
+    
     public int getWeight(){
         return this.weight;
     }
-
+    
     public int getFoodConsumption(){
         return (this.getWeight() / 3);
     }
@@ -154,7 +158,7 @@ public class Species {
     /**
      * Get the ratio reported to ratio/1 for the specific role.
      * @param role The role to find the ratio.
-     * @return The resulted ratio 0 < ratio < 1
+     * @return The resulted ratio 0 to ratio to 1
      */
     public double getRealRatio(AntRole role){
         return this.getRatio(role) / (double) getTotalRatio();

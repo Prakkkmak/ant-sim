@@ -16,7 +16,7 @@ public class Queen extends AntRole {
   public void action(Ant ant) {
     int ageDay = ant.getAge().getDay();
     if(ageDay < lastEggingDay + 2) return;
-
+    //TODO fonction ponte avec parametre parametrable dans species. (augmenter le nombre de ponte)
     AntFactory antFactory = new AntFactory(ant.getSpecies());
     Tile antTile = ant.getTile();
     Ant egg = antFactory.createAnt(antTile, new Egg());

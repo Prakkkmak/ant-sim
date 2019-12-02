@@ -18,9 +18,9 @@ public class AntFactory {
     }
     /**
      * Create an ant at specific tile and state and role.
-     * @param tile The tile where the ant is created.
-     * @param state The state of the ant.
-     * @param antRole The role of the ant. Useless if the state is not Mature.
+     * @param Tile The tile where the ant is created.
+     * @param State The state of the ant.
+     * @param AntRole The role of the ant. Useless if the state is not Mature.
      * @return The ant newly created.
      */
     public Ant createAnt(Tile tile, State state, AntRole antRole){
@@ -32,8 +32,8 @@ public class AntFactory {
 
     /**
      * Create an ant at specific tile and state. If state is mature, the ant is a worker.
-     * @param tile The tile where the ant is created.
-     * @param state The state of the ant.
+     * @param Tile The tile where the ant is created.
+     * @param State The state of the ant.
      * @return The ant newly created.
      */
     public Ant createAnt(Tile tile, State state){

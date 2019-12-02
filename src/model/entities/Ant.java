@@ -17,29 +17,60 @@ import model.world.Time;
 
 /**
  * An model.ant is an element who eat, evolve and have a behaviour.
+ * 
  * @author lostanth
  *
  */
 public class Ant extends EntityTile {
+  /**
+   * Quantity of food eaten.
+   */
   private int food;
+
+  /**
+   * State of development.
+   */
   private State state;
+
+  /**
+   * Data of ant.
+   */
   private Species species;
 
+  /**
+   * Time ant can stay outside.
+   */
+  private int stamina;
+
+  /**
+   * Position of the creation of the ant. Where the ant come back.
+   */
+  private Tile home;
+
+  /**
+   * Constructor of ant by tile and species.
+   * 
+   * @param tile The tile where ant is created.
+   * @param species The species of the ant.
+   */
   public Ant(Tile tile, Species species) {
     super(tile);
     this.species = species;
     this.state = new Egg();
     this.food = this.species.getFoodConsumption();
+    this.stamina = this.species.getStamina();
+    this.home = tile;
+
   }
-  
+
   public State getState() {
     return this.state;
   }
-  
+
   public void setState(State state) {
     this.state = state;
   }
-  
+
   public AntRole getRole() {
     return this.state.getAntRole();
   }
@@ -48,38 +79,70 @@ public class Ant extends EntityTile {
     this.state.setAntRole(antRole);
   }
 
-  public Species getSpecies(){
+  public Species getSpecies() {
     return this.species;
   }
 
-  public int getFood() { return this.food; }
+  public int getStamina() {
+    return this.stamina;
+  }
+
+  public void setStamina(int newStamina) {
+    this.stamina = newStamina;
+  }
+
+  // TODO decrease remplace remove pour food de tile.
+  public void decreaseStamina(int amount) {
+    this.setStamina(this.getStamina() - amount);
+  }
 
   /**
-   * Consume the food in the current tile. If the tile don't have enough food, the ant consume all the food remaining.
-   * If the ant have less than 0 food they become garbage.
-   * @param amount the amount of food to consume.
+   * Decrease stamina by 1.
    */
-  public void consume(int amount){
+  public void decreaseStamina() {
+    this.decreaseStamina(1);
+  }
+
+  public int getFood() {
+    return this.food;
+  }
+
+  public Tile getHome() {
+    return home;
+  }
+
+  /**
+   * Consume the food in the current tile. If the tile don't have enough food, the ant consume all
+   * the food remaining. If the ant have less than 0 food they become garbage.
+   * 
+   * @param amount The amount of food to consume.
+   */
+  public void consume(int amount) {
     int tileFood = this.getTile().getFood();
-    if(tileFood >= amount){
+    if (tileFood >= amount) {
       this.food += amount;
       this.getTile().removeFood(amount);
-    }
-    else{
+    } else {
       this.food += tileFood;
       this.getTile().removeFood(tileFood);
     }
-    if(this.getFood() < 0){
+    // TODO why this is there ?
+    if (this.getFood() < 0) {
       this.setState(new Garbage());
     }
   }
 
-  public void consume(){
-    this.consume(this.species.getFoodConsumption());
+  public void consume() {
+    this.consume(this.getSpecies().getFoodConsumption());
+  }
+
+  public void moveTo(Tile nextTile) {
+    this.getTile().removeEntity(this);
+    nextTile.addEntity(this);
   }
 
   @Override
-  public void update(){
+  public void update() {
     state.action(this);
   }
 
@@ -91,8 +154,11 @@ public class Ant extends EntityTile {
   @Override
   public int getId() {
     AntRole antRole = this.getRole();
-    if(antRole == null) return ESprite.GARBAGE.getValue();
+    if (antRole == null)
+      return ESprite.GARBAGE.getValue();
     return antRole.getId();
   }
+
+
 
 }

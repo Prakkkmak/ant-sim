@@ -6,17 +6,17 @@ import model.world.World;
 
 public class App {
   public static void main(String[] args) {
-
-    World world = new World(100, 100);
+    //TODO parameters main
+    World world = new World(160, 160);
     //model.world.addEntity(,5, 5);
-    for(int i = 0; i < 10; i++){
-      world.createWorker(51, 51);
+    for(int i = 0; i < 1000; i++){
+      world.createWorker(150, 150);
     }
 
     //world.createWorker(10, 10);
     //world.createEgg(50, 50);
-    world.createQueen(51,51);
-    timer(world, 5);
+    world.createQueen(150,150);
+    timer(world, 1);
   }
 
   public static void timer(World world, int minutePerTick){
@@ -32,6 +32,7 @@ public class App {
       long dateMs = date.getTime();
 
       if(dateMs - time > 50) {
+
         //onMinutePass.run();
         if(++currentViewUpdate > viewUpdateRate){
           view.update();

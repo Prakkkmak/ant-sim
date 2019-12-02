@@ -7,15 +7,15 @@ import model.world.World;
 public class App {
   public static void main(String[] args) {
     //TODO parameters main
-    World world = new World(160, 160);
+    World world = new World(500, 500);
     //model.world.addEntity(,5, 5);
-    for(int i = 0; i < 1000; i++){
-      world.createWorker(150, 150);
+    for(int i = 0; i < 10000; i++){
+      world.createWorker(200, 200);
     }
 
     //world.createWorker(10, 10);
     //world.createEgg(50, 50);
-    world.createQueen(150,150);
+    world.createQueen(200,200);
     timer(world, 1);
   }
 

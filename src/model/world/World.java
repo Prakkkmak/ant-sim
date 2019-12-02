@@ -142,6 +142,10 @@ public class World implements ITickable {
     this.tiles[x][y].addEntity(entity);
   }
 
+  /**
+   * Get ant count. Count all ant in all states.
+   * @return The ant count.
+   */
   public int getAntCount(){
     AntCounterVisitor visitor = new AntCounterVisitor();
     for (Tile[] tiles : this.tiles) {
@@ -152,10 +156,21 @@ public class World implements ITickable {
     return visitor.getAntCount();
   }
 
+  /**
+   * Get number of days of the world.
+   * @return The number of days.
+   */
   public int getDays(){
     return this.date.getDay();
   }
 
+  /**
+   * Get a tile at specific location.
+   * TODO Ne pas retourner de tile
+   * @param x Position X.
+   * @param y Position Y.
+   * @return The tile at this position.
+   */
   public Tile getTile(int x, int y){
     return this.tiles[x][y];
   }

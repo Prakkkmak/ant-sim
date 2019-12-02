@@ -7,7 +7,7 @@ import model.world.World;
 public class App {
   public static void main(String[] args) {
 
-    World world = new World(300, 300);
+    World world = new World(100, 100);
     //model.world.addEntity(,5, 5);
     for(int i = 0; i < 10; i++){
       world.createWorker(51, 51);

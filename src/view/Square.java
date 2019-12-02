@@ -24,8 +24,8 @@ public class Square extends GBounded {
   public void addAnt() {
     removeIcon();
     GOval ant =  new GOval();
-    ant.setColor(Color.red);
-    ant.setDimension(new Dimension(this.tileSize, this.tileSize));
+    ant.setColor(Color.magenta);
+    ant.setDimension(this.getDimension());
     this.icon = ant;
     this.addSubElement(ant);
   }
@@ -37,6 +37,14 @@ public class Square extends GBounded {
     queen.setDimension(this.getDimension());
     this.icon = queen;
     this.addSubElement(queen);
+  }
+  public void addMarked(){
+    removeIcon();
+    GOval marked = new GOval();
+    marked.setColor(Color.blue);
+    marked.setDimension(this.getDimension());
+    this.icon = marked;
+    this.addSubElement(marked);
   }
 
   public void removeIcon() {

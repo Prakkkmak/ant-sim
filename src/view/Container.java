@@ -38,7 +38,11 @@ public class Container extends GBounded {
                 Color c = new Color(254 - pheromoneRate, 254, 254 - pheromoneRate);
                 this.grid[i][j].setColor(c);
                 int content = this.world.getTileContent(i, j);
-                if(content == 0) {
+                boolean marked = this.world.getMarked(i,j);
+                if(marked){
+                    this.grid[i][j].addMarked();
+                }
+                else if(content == 0) {
                     this.grid[i][j].removeIcon();
                 }
                 else if(content == 1) {

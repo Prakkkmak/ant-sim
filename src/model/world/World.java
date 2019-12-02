@@ -42,6 +42,9 @@ public class World implements ITickable {
       }
     }
   }
+  public World(int size) {
+    this(size, size);
+  }
   /**
    * Number of tiles in x axis.
    * @return The number of tiles.
@@ -92,7 +95,17 @@ public class World implements ITickable {
    * @param y Position Y.
    */
   public void createWorker(int x, int y) {
+    createWorker(x,y,false);
+  }
+  /**
+   * Create a worker at specific coords with a mark.
+   * @param x Position X.
+   * @param y Position Y.
+   * @param marked True if it's marked
+   */
+  public void createWorker(int x, int y, boolean marked) {
     Ant ant = antFactory.createAnt(this.tiles[x][y], new Worker());
+    ant.setMarked(marked);
     this.addEntity(ant, x, y);
   }
 
@@ -173,6 +186,10 @@ public class World implements ITickable {
    */
   public Tile getTile(int x, int y){
     return this.tiles[x][y];
+  }
+
+  public boolean getMarked(int x, int y){
+    return this.tiles[x][y].isMarked();
   }
 
 }

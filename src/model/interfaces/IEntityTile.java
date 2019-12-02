@@ -8,4 +8,6 @@ public interface IEntityTile extends ITickable, IVisitable {
   int getX();
   int getY();
   int getId();
+  boolean isMarked();
+  void setMarked(boolean marked);
 }

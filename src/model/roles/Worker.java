@@ -19,6 +19,11 @@ public class Worker extends AntRole {
   //TODO factoriser.
   @Override
   public void action(Ant ant) {
+
+    if(Math.random() < 0.0001){
+      return;
+    }
+
     int antStamina = ant.getStamina();
     int speciesStamina = ant.getSpecies().getStamina();
 
@@ -32,7 +37,7 @@ public class Worker extends AntRole {
     else {
       this.explore(ant);
     }
-    ant.getTile().addPheromone(ant.getSpecies().getPheromone(), 100); // TODO to species.
+    ant.getTile().addPheromone(ant.getSpecies().getPheromone(), 200); // TODO to species.
     ant.decreaseStamina();
     
 

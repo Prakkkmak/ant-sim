@@ -60,7 +60,6 @@ public class Ant extends EntityTile {
     this.food = this.species.getFoodConsumption();
     this.stamina = this.species.getStamina();
     this.home = tile;
-
   }
 
   public State getState() {

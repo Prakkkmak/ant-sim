@@ -197,6 +197,13 @@ public class Tile implements ITickable, IVisitable {
     return this.world.getTile(getX() - 1, getY());
   }
 
+  public boolean isMarked(){
+    for(IEntityTile e : entities){
+      if(e.isMarked()) return true;
+    }
+    return false;
+  }
+
   /**
    * Get the number of a specific pheromone.
    * @param p The pheromone.

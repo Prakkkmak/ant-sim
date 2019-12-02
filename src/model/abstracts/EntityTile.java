@@ -8,11 +8,12 @@ public abstract class  EntityTile implements IEntityTile {
     private int lastAction;
     private Time age;
     private Tile tile;
-
+    private boolean marked;
     public EntityTile(Tile tile){
         this.lastAction = 0;
         this.age = new Time();
         this.tile = tile;
+        this.marked = false;
     }
 
     public Time getAge(){
@@ -33,6 +34,15 @@ public abstract class  EntityTile implements IEntityTile {
 
     public void setTile(Tile tile) {
         this.tile = tile;
+    }
+
+
+    public boolean isMarked() {
+        return marked;
+    }
+
+    public void setMarked(boolean marked) {
+        this.marked = marked;
     }
 
     public abstract void update();

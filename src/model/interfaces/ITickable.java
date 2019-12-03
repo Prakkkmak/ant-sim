@@ -1,10 +1,12 @@
 package model.interfaces;
+
 /**
  * Interface for timed sensitive elements.
- * @author lostanth
  *
+ * @author lostanth
  */
 public interface ITickable {
+
   /**
    * Have to be casted when an simulated hour is passed.
    */

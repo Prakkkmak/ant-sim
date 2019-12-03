@@ -1,6 +1,7 @@
 package model.world;
 
 public class Pheromone {
+
   private int volatility;
 
   public Pheromone() {

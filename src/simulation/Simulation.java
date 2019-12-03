@@ -1,3 +1,5 @@
+package simulation;
+
 import java.util.Date;
 import model.world.World;
 import view.GlobalFrame;
@@ -32,24 +34,48 @@ public class Simulation {
     return worldSize;
   }
 
+  public void setWorldSize(int worldSize) {
+    this.worldSize = worldSize;
+  }
+
   public int getStartingWorkers() {
     return startingWorkers;
+  }
+
+  public void setStartingWorkers(int startingWorkers) {
+    this.startingWorkers = startingWorkers;
   }
 
   public int getMinutesPerTick() {
     return minutesPerTick;
   }
 
+  public void setMinutesPerTick(int minutesPerTick) {
+    this.minutesPerTick = minutesPerTick;
+  }
+
   public int getMarkedWorkersNumber() {
     return markedWorkersNumber;
+  }
+
+  public void setMarkedWorkersNumber(int markedWorkersNumber) {
+    this.markedWorkersNumber = markedWorkersNumber;
+  }
+
+  public int getTick() {
+    return tick;
+  }
+
+  public void setTick(int tick) {
+    this.tick = tick;
   }
 
   public int getRefreshRate() {
     return refreshRate;
   }
 
-  public int getTick() {
-    return tick;
+  public void setRefreshRate(int refreshRate) {
+    this.refreshRate = refreshRate;
   }
 
   public World getWorld() {

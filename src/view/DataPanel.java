@@ -4,30 +4,34 @@ import graphicLayer.GRect;
 import graphicLayer.GString;
 import model.enums.EType;
 import model.world.World;
+import simulation.Simulation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
-public class DataPanel2 extends JTextArea {
-
-  private World world;
+public class DataPanel extends JPanel {
+  private Simulation simulation;
   private GString date;
   private GString antCount;
-  private JTextArea jTextArea;
+  private JLabel textLabel;
 
-  public DataPanel2(World world, int x, int y) {
-    this.world = world;
-    this.setRows(x);
-    this.setColumns(y);
-    this.setBounds(x,y, 100, 300);
+  public DataPanel(Simulation simulation) {
+    //this.simulation = simulation;
+    //this.setRows(x);
+    //this.setColumns(y);
+    //this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+    //this.setBounds(x,y, 100, 300);
+    this.simulation = simulation;
+    this.textLabel = new JLabel("<html>  test  </html>");
+    this.add(this.textLabel);
   }
 
-  public void updateInfos() {
-    Map<EType, Integer> infoOutside = this.world.getOutsides();
-    Map<EType, Integer> infoInside = this.world.getInsides();
-    String text = "";
-    text += "-- Total: \n";
+  public void update() {
+    Map<EType, Integer> infoOutside = this.simulation.getWorld().getOutsides();
+    Map<EType, Integer> infoInside = this.simulation.getWorld().getInsides();
+    String text = "<html>-------- Ant Sim --------<br>";
+    text += "<br>-- Total:<br><br>";
     int total = 0;
     for (Integer i : infoOutside.values()){
       total += i;
@@ -35,20 +39,20 @@ public class DataPanel2 extends JTextArea {
     for (Integer i : infoInside.values()){
       total += i;
     }
-    text += "Entities : " + total + "\n";
-    text += "-- Outside: \n";
-    if(infoOutside.get(EType.WORKER) != null) text += "Workers :" + infoOutside.get(EType.WORKER) + "\n";
-    else text += "Workers : 0\n";
-    text += "-- Inside: \n";
-    if(infoInside.get(EType.EGG) != null) text += "EGG :" + infoInside.get(EType.EGG) + "\n";
-    else text += "EGG : 0\n";
-    if(infoInside.get(EType.LARVA) != null) text += "LARVA :" + infoInside.get(EType.LARVA) + "\n";
-    else text += "LARVA : 0\n";
-    if(infoInside.get(EType.NYMPH) != null) text += "NYMPH :" + infoInside.get(EType.NYMPH) + "\n";
-    else text += "NYMPH : 0\n";
-    if(infoInside.get(EType.WORKER) != null) text += "WORKER :" + infoInside.get(EType.WORKER) + "\n";
-    else text += "WORKER : 0\n";
-    this.setText(text);
+    text += "Entities : " + total + "<br>";
+    text += "<br>-- Outside: <br><br>";
+    if(infoOutside.get(EType.WORKER) != null) text += "Workers :" + infoOutside.get(EType.WORKER) + "<br>";
+    else text += "Workers : 0<br>";
+    text += "<br>-- Inside: <br><br>";
+    if(infoInside.get(EType.EGG) != null) text += "EGG :" + infoInside.get(EType.EGG) + "<br>";
+    else text += "EGG : 0<br>";
+    if(infoInside.get(EType.LARVA) != null) text += "LARVA :" + infoInside.get(EType.LARVA) + "<br>";
+    else text += "LARVA : 0<br>";
+    if(infoInside.get(EType.NYMPH) != null) text += "NYMPH :" + infoInside.get(EType.NYMPH) + "<br>";
+    else text += "NYMPH : 0<br>";
+    if(infoInside.get(EType.WORKER) != null) text += "WORKER :" + infoInside.get(EType.WORKER) + "<br>";
+    else text += "WORKER : 0<br>";
+    this.textLabel.setText(text);
     //jLabel.equals("Workers count = " + world.getAntCount());
     //this.date.setString(" Date : " + world.getDays() + " days");
     //this.antCount.setString(" Pop : " + world.getAntCount() + " ants");

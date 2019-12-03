@@ -14,9 +14,9 @@ public class SpeciesFactory {
   public static Species CreateDefaultSpecies() {
     //TODO aléger constructeur
     Species species = new Species("Defola Fourmila", 4500, 200, 11 * 60);
-    species.setGrowthDays(new Egg(), 1);
-    species.setGrowthDays(new Larva(), 3);
-    species.setGrowthDays(new Nymph(), 5);
+    species.setGrowthDays(new Egg(), 5);
+    species.setGrowthDays(new Larva(), 10);
+    species.setGrowthDays(new Nymph(), 15);
     species.setGrowthDays(new Mature(), 100000);
     species.setRatio(new Worker(), 65);
     species.setRatio(new Soldier(), 20);

@@ -7,22 +7,23 @@ import java.awt.Dimension;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import model.world.World;
+import simulation.Simulation;
 
-public class Container extends GBounded {
+public class Grid extends GBounded {
 
   private Square[][] grid;
-  private World world;
+  private Simulation simulation;
 
-  public Container(World world, GSpace gSpace) {
-    this.world = world;
+  public Grid(Simulation simulation) {
+    this.simulation = simulation;
     this.setColor(Color.white);
     this.setDimension(new Dimension(500, 500));
     this.createGrid();
   }
 
   public void createGrid() {
-    int sizeX = this.world.getSizeX();
-    int sizeY = this.world.getSizeY();
+    int sizeX = this.simulation.getWorld().getSizeX();
+    int sizeY = this.simulation.getWorld().getSizeY();
     this.grid = new Square[sizeX][sizeY];
     for (int i = 0; i < this.grid.length; i++) {
       for (int j = 0; j < this.grid[i].length; j++) {
@@ -51,11 +52,11 @@ public class Container extends GBounded {
     }
     return new Color(255 - foodRate, 255 , 255 - foodRate);
   }
-  public void updateGrid() {
+  public void update() {
     for (int i = 0; i < this.grid.length; i++) {
       for (int j = 0; j < this.grid[i].length; j++) {
-        int pheromoneRate = this.world.getPheromoneConcentration(i, j);
-        int foodRate = this.world.getFoodConcentration(i, j);
+        int pheromoneRate = this.simulation.getWorld().getPheromoneConcentration(i, j);
+        int foodRate = this.simulation.getWorld().getFoodConcentration(i, j);
         Color c;
         if(foodRate > 0){
           c = this.foodColor(foodRate);
@@ -64,8 +65,8 @@ public class Container extends GBounded {
           c = this.pheromoneColor(pheromoneRate);
         }
         this.grid[i][j].setColor(c);
-        int content = this.world.getTileContent(i, j);
-        boolean marked = this.world.getMarked(i, j);
+        int content = this.simulation.getWorld().getTileContent(i, j);
+        boolean marked = this.simulation.getWorld().getMarked(i, j);
         if (marked && content == 4) {
           //this.grid[i][j].addMarked();
         } else if (content == 0) {
@@ -82,6 +83,6 @@ public class Container extends GBounded {
   }
 
   private int getTileSize() {
-    return this.getHeight() / this.world.getSizeX();
+    return this.getHeight() / this.simulation.getWorld().getSizeX();
   }
 }

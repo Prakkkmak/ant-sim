@@ -270,7 +270,7 @@ public class Tile implements ITickable, IVisitable {
     if(this.pheromones.containsKey(p)){
       amount += this.pheromones.get(p);
     }
-    if(amount > 1000) amount = 1000;
+    if(amount > 1200) amount = 1200;
     this.pheromones.put(p, amount);
   }
 
@@ -302,7 +302,7 @@ public class Tile implements ITickable, IVisitable {
       //TODO improve readibility
       int volatility = pheromone.getKey().getVolatility();
       int value = pheromone.getValue();
-      pheromone.setValue((int) (value * 0.99));
+      pheromone.setValue((int) (value * 0.999));
       if (pheromone.getValue() < 0) {
         pheromone.setValue(0);
       }

@@ -37,7 +37,7 @@ public class Worker extends AntRole {
       this.carry(ant);
     } else if(ant.getCarriedFood() > 0){
       this.moveTowardHome(ant);
-      ant.getTile().addPheromone(speciesPheromone, antSpecies.getPheromoneDropRate() * 300);
+      ant.getTile().addPheromone(speciesPheromone, antSpecies.getPheromoneDropRate() * 700);
     } else if (antStamina < speciesStamina / 2) {
       this.moveTowardHome(ant);
       ant.getTile().addPheromone(speciesPheromone, antSpecies.getPheromoneDropRate());

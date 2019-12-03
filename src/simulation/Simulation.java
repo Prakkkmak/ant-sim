@@ -1,5 +1,6 @@
 import java.util.Date;
 import model.world.World;
+import view.GlobalFrame;
 import view.View;
 
 public class Simulation {
@@ -47,6 +48,14 @@ public class Simulation {
     return refreshRate;
   }
 
+  public int getTick() {
+    return tick;
+  }
+
+  public World getWorld() {
+    return world;
+  }
+
   public void init() {
     int worldSize = this.getWorldSize();
     this.world = new World(worldSize, worldSize);
@@ -64,7 +73,8 @@ public class Simulation {
   }
 
   public void run() {
-    View view = new View(this.world);
+    //View view = new View(this.world);
+    GlobalFrame globalFrame = new GlobalFrame(this);
     //view.update();
     Date date = new Date();
     long time = date.getTime();
@@ -75,7 +85,7 @@ public class Simulation {
         for (int i = 0; i < this.getMinutesPerTick(); i++) {
           world.onMinutePass(this.tick++);
         }
-        view.update();
+        globalFrame.update();
         time = date.getTime();
       }
     }

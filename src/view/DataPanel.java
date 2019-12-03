@@ -2,49 +2,53 @@ package view;
 
 import graphicLayer.GRect;
 import graphicLayer.GString;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.util.Map;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import model.enums.EType;
 import model.world.World;
 
-public class DataPanel extends GRect {
+import javax.swing.*;
+import java.awt.*;
+import java.util.Map;
+
+public class DataPanel2 extends JTextArea {
 
   private World world;
   private GString date;
   private GString antCount;
   private JTextArea jTextArea;
 
-  public DataPanel(World world, int x, int y) {
+  public DataPanel2(World world, int x, int y) {
     this.world = world;
-    this.setPosition(new Point(x, y));
-    this.setDimension(new Dimension(100, 300));
-    this.setColor(Color.lightGray);
-    this.setBorderColor(Color.black);
-    this.setBorderWidth(2);
-    JFrame frame = new JFrame("Stats");
-    this.jTextArea = new JTextArea(10, 30);
-    frame.add(this.jTextArea);
-    frame.pack();
-    frame.setVisible(true);
+    this.setRows(x);
+    this.setColumns(y);
+    this.setBounds(x,y, 100, 300);
   }
 
   public void updateInfos() {
-    Map<EType, Integer> infosOutside = this.world.getOutsides();
-    Map<EType, Integer> infosInside = this.world.getInsides();
+    Map<EType, Integer> infoOutside = this.world.getOutsides();
+    Map<EType, Integer> infoInside = this.world.getInsides();
     String text = "";
+    text += "-- Total: \n";
+    int total = 0;
+    for (Integer i : infoOutside.values()){
+      total += i;
+    }
+    for (Integer i : infoInside.values()){
+      total += i;
+    }
+    text += "Entities : " + total + "\n";
     text += "-- Outside: \n";
-    if(infosOutside.get(EType.WORKER) != null) text += "Workers :" + infosOutside.get(EType.WORKER) + "\n";
+    if(infoOutside.get(EType.WORKER) != null) text += "Workers :" + infoOutside.get(EType.WORKER) + "\n";
+    else text += "Workers : 0\n";
     text += "-- Inside: \n";
-    if(infosInside.get(EType.EGG) != null) text += "EGG :" + infosInside.get(EType.EGG) + "\n";
-    if(infosInside.get(EType.LARVA) != null) text += "LARVA :" + infosInside.get(EType.LARVA) + "\n";
-    if(infosInside.get(EType.NYMPH) != null) text += "NYMPH :" + infosInside.get(EType.NYMPH) + "\n";
-    if(infosInside.get(EType.WORKER) != null) text += "WORKER :" + infosInside.get(EType.WORKER) + "\n";
-    jTextArea.setText(text);
+    if(infoInside.get(EType.EGG) != null) text += "EGG :" + infoInside.get(EType.EGG) + "\n";
+    else text += "EGG : 0\n";
+    if(infoInside.get(EType.LARVA) != null) text += "LARVA :" + infoInside.get(EType.LARVA) + "\n";
+    else text += "LARVA : 0\n";
+    if(infoInside.get(EType.NYMPH) != null) text += "NYMPH :" + infoInside.get(EType.NYMPH) + "\n";
+    else text += "NYMPH : 0\n";
+    if(infoInside.get(EType.WORKER) != null) text += "WORKER :" + infoInside.get(EType.WORKER) + "\n";
+    else text += "WORKER : 0\n";
+    this.setText(text);
     //jLabel.equals("Workers count = " + world.getAntCount());
     //this.date.setString(" Date : " + world.getDays() + " days");
     //this.antCount.setString(" Pop : " + world.getAntCount() + " ants");

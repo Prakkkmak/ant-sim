@@ -1,6 +1,6 @@
-package graphicLayer.demos;
+package main.graphicLayer.demos;
 
-import graphicLayer.*;
+import main.graphicLayer.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

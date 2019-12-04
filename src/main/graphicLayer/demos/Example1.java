@@ -1,9 +1,9 @@
-package graphicLayer.demos;
+package main.graphicLayer.demos;
 
-import graphicLayer.GBounded;
-import graphicLayer.GElement;
-import graphicLayer.GOval;
-import graphicLayer.GSpace;
+import main.graphicLayer.GBounded;
+import main.graphicLayer.GElement;
+import main.graphicLayer.GOval;
+import main.graphicLayer.GSpace;
 
 import java.awt.*;
 import java.util.Iterator;

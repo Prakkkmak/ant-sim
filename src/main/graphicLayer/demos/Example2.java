@@ -1,7 +1,7 @@
-package graphicLayer.demos;
+package main.graphicLayer.demos;
 
-import graphicLayer.GBounded;
-import graphicLayer.GSpace;
+import main.graphicLayer.GBounded;
+import main.graphicLayer.GSpace;
 
 import java.awt.*;
 

@@ -1,9 +1,9 @@
-package graphicLayer.demos;
+package main.graphicLayer.demos;
 
-import graphicLayer.GImage;
-import graphicLayer.GRect;
-import graphicLayer.GSpace;
-import graphicLayer.GString;
+import main.graphicLayer.GImage;
+import main.graphicLayer.GRect;
+import main.graphicLayer.GSpace;
+import main.graphicLayer.GString;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

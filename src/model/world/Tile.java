@@ -55,6 +55,9 @@ public class Tile implements ITickable, IVisitable {
     this.x = x;
     this.y = y;
     this.food = 0;
+    if(Math.random() < 0.001){
+      this.food = (int)(Math.random() * 10000) * 100;
+    }
   }
 
   /**
@@ -259,6 +262,12 @@ public class Tile implements ITickable, IVisitable {
     }
     return rate;
   }
+  public int getPheromoneRate(int pheromoneId) {
+    for(Pheromone p : this.pheromones.keySet()){
+      if(p.getId() == pheromoneId) return getPheromoneRate(p);
+    }
+    return 0;
+  }
 
   /**
    * Add pheromone.
@@ -270,7 +279,7 @@ public class Tile implements ITickable, IVisitable {
     if(this.pheromones.containsKey(p)){
       amount += this.pheromones.get(p);
     }
-    if(amount > 1200) amount = 1200;
+    if(amount > p.getSaturation()) amount = p.getSaturation();
     this.pheromones.put(p, amount);
   }
 
@@ -302,7 +311,7 @@ public class Tile implements ITickable, IVisitable {
       //TODO improve readibility
       int volatility = pheromone.getKey().getVolatility();
       int value = pheromone.getValue();
-      pheromone.setValue((int) (value * 0.999));
+      pheromone.setValue((int) (value * 0.99));
       if (pheromone.getValue() < 0) {
         pheromone.setValue(0);
       }

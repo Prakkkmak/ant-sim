@@ -38,6 +38,7 @@ public class Ant extends EntityTile {
    */
   private int stamina;
   private int carriedFood;
+  private int weight;
   /**
    * Position of the creation of the ant. Where the ant come back.
    */
@@ -60,6 +61,7 @@ public class Ant extends EntityTile {
     this.food = this.species.getFoodConsumption();
     this.stamina = this.species.getStamina();
     this.home = tile;
+    this.weight = species.getWeight();
   }
 
   public State getState() {
@@ -88,6 +90,11 @@ public class Ant extends EntityTile {
 
   public void setStamina(int newStamina) {
     this.stamina = newStamina;
+    if(stamina < 0) this.state = new Garbage();
+  }
+
+  public int getWeight() {
+    return weight;
   }
 
   // TODO decrease remplace remove pour food de tile.
@@ -99,6 +106,7 @@ public class Ant extends EntityTile {
    * Decrease stamina by 1.
    */
   public void decreaseStamina() {
+
     this.decreaseStamina(1);
   }
 

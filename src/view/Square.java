@@ -65,6 +65,17 @@ public class Square extends GBounded {
     this.icon = icon;
     this.addSubElement(icon);
   }
+  
+  public void addPrey(){
+    removeIcon();
+    GRect icon = new GRect();
+    icon.setColor(Color.CYAN);
+    icon.setBorderColor(Color.CYAN);
+    icon.setBorderWidth(2);
+    icon.setDimension(this.getDimension());
+    this.icon = icon;
+    this.addSubElement(icon);
+  }
 
   public void removeIcon() {
     if (this.icon == null) {

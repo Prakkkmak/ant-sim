@@ -71,6 +71,11 @@ public class Species {
     this.growths = new HashMap<>();
     this.ratios = new HashMap<>();
     this.homePheromone = new Pheromone();
+    this.homePheromone.setSaturation(72000);
+    this.foodPheromone = new Pheromone();
+    this.foodPheromone.setSaturation(72000);
+    this.fightPheromone = new Pheromone();
+    this.garbagePheromone = new Pheromone();
   }
 
   public String getName() {
@@ -183,6 +188,18 @@ public class Species {
 
   public Pheromone getHomePheromone() {
     return this.homePheromone;
+  }
+
+  public Pheromone getFoodPheromone() {
+    return foodPheromone;
+  }
+
+  public Pheromone getGarbagePheromone() {
+    return garbagePheromone;
+  }
+
+  public Pheromone getFightPheromone() {
+    return fightPheromone;
   }
 
   /**

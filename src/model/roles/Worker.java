@@ -26,24 +26,29 @@ public class Worker extends AntRole {
     int antStamina = ant.getStamina();
     int speciesStamina = antSpecies.getStamina();
     Pheromone speciesPheromone = antSpecies.getHomePheromone();
-
+    Pheromone foodPheromone = antSpecies.getFoodPheromone();
+    boolean useExploreForGoHome = false;
     if (Math.random() < 0.001) { // AFK rate
       return;
     }
-
-    if (ant.getTile().equals(ant.getHome())) {
+    if(ant.getTile().contains(EType.PREY)){
+      ant.getTile().addPheromone(foodPheromone, antSpecies.getPheromoneDropRate() * 200);
+    } else if (ant.getTile().equals(ant.getHome())) {
       this.house(ant);
     } else if(ant.getTile().getFood() > 0 && ant.getCarriedFood() < ant.getSpecies().getMaxCarry()) {
       this.carry(ant);
     } else if(ant.getCarriedFood() > 0){
-      this.moveTowardHome(ant);
-      ant.getTile().addPheromone(speciesPheromone, antSpecies.getPheromoneDropRate() * 700);
+      if(useExploreForGoHome) bringFood(ant);
+      else this.moveTowardHome(ant);
+      //ant.getTile().addPheromone(speciesPheromone, antSpecies.getPheromoneDropRate());
+      ant.getTile().addPheromone(foodPheromone, antSpecies.getPheromoneDropRate() * 200);
     } else if (antStamina < speciesStamina / 2) {
-      this.moveTowardHome(ant);
+      if(useExploreForGoHome) bringFood(ant);
+      else this.moveTowardHome(ant);
       ant.getTile().addPheromone(speciesPheromone, antSpecies.getPheromoneDropRate());
     } else {
+      ant.getTile().addPheromone(speciesPheromone, (int)(antSpecies.getPheromoneDropRate() * (ant.getStamina() / (double)ant.getSpecies().getStamina())));
       this.explore(ant);
-      ant.getTile().addPheromone(speciesPheromone, antSpecies.getPheromoneDropRate());
     }
 
   }
@@ -67,7 +72,9 @@ public class Worker extends AntRole {
       ant.setCarriedFood(antSpecies.getMaxCarry());
     }
   }
+  private void house2(Ant ant){
 
+  }
   private void house(Ant ant) {
     if(ant.getCarriedFood() > 0){
       ant.getTile().addFood(ant.getCarriedFood());
@@ -82,13 +89,16 @@ public class Worker extends AntRole {
       explore(ant);
     }
   }
-
   private void explore(Ant ant) {
+    this.explore(ant, false);
+  }
+  private void explore(Ant ant, boolean home) {
     if (this.fromTiles.size() == 0) {
       this.fromTiles.add(ant.getHome());
     }
     Species species = ant.getSpecies();
-    Pheromone speciesPheromone = species.getHomePheromone();
+    Pheromone homePheromone = species.getHomePheromone();
+    Pheromone foodPheromone = species.getFoodPheromone();
     Tile northTile = ant.getTile().getNorthTile();
     Tile eastTile = ant.getTile().getEastTile();
     Tile southTile = ant.getTile().getSouthTile();
@@ -102,12 +112,14 @@ public class Worker extends AntRole {
     int chanceToGoWest = 0;
     /* Add random behaviour */
     int randomMovementRate = species.getRandomMovementRate();
+    if(home) randomMovementRate = 0;
     chanceToGoNorth += randomMovementRate;
     chanceToGoEast += randomMovementRate;
     chanceToGoSouth += randomMovementRate;
     chanceToGoWest += randomMovementRate;
     /* Add linear behaviour to chances. */
     int linearMovementRate = species.getLinearMovementRate();
+    if(home) linearMovementRate = 0;
     if (fromTile.equals(northTile)) {
       chanceToGoSouth += linearMovementRate;
     }
@@ -121,25 +133,59 @@ public class Worker extends AntRole {
       chanceToGoEast += linearMovementRate;
     }
     /* Add pheromones if tile exist, chance = 0 otherwise */
+    int foodFactor = 4;
+    int goHomeFactor = 20;
     if (this.fromTiles.contains(northTile) || northTile == null) {
       chanceToGoNorth = 0;
     } else {
-      chanceToGoNorth += northTile.getPheromoneRate(speciesPheromone);
+      if(!home){
+        chanceToGoNorth += northTile.getPheromoneRate(homePheromone);
+        chanceToGoNorth += northTile.getPheromoneRate(foodPheromone) * foodFactor;
+        if(northTile.getFood() > 0 && !northTile.contains(EType.ANTHILL))
+          chanceToGoNorth += 100000000;
+      }
+      else{
+        chanceToGoNorth += northTile.getPheromoneRate(homePheromone) * goHomeFactor;
+      }
     }
     if (this.fromTiles.contains(eastTile) || eastTile == null) {
       chanceToGoEast = 0;
     } else {
-      chanceToGoEast += eastTile.getPheromoneRate(speciesPheromone);
+      if(!home){
+        chanceToGoEast += eastTile.getPheromoneRate(homePheromone);
+        chanceToGoEast += eastTile.getPheromoneRate(foodPheromone) * foodFactor;
+        if(eastTile.getFood() > 0 && !eastTile.contains(EType.ANTHILL))
+          chanceToGoEast += 100000000;
+      }
+      else{
+        chanceToGoEast += eastTile.getPheromoneRate(homePheromone) * goHomeFactor;
+      }
     }
     if (this.fromTiles.contains(southTile) || southTile == null) {
       chanceToGoSouth = 0;
     } else {
-      chanceToGoSouth += southTile.getPheromoneRate(speciesPheromone);
+      if(!home){
+        chanceToGoSouth += southTile.getPheromoneRate(homePheromone);
+        chanceToGoSouth += southTile.getPheromoneRate(foodPheromone) * foodFactor;
+        if(southTile.getFood() > 0 && !southTile.contains(EType.ANTHILL))
+          chanceToGoSouth += 100000000;
+      }
+      else{
+        chanceToGoSouth += southTile.getPheromoneRate(homePheromone) * goHomeFactor;
+      }
     }
     if (this.fromTiles.contains(westTile) || westTile == null) {
       chanceToGoWest = 0;
     } else {
-      chanceToGoWest += westTile.getPheromoneRate(speciesPheromone);
+      if(!home){
+        chanceToGoWest += westTile.getPheromoneRate(homePheromone);
+        chanceToGoWest += westTile.getPheromoneRate(foodPheromone) * foodFactor;
+        if(westTile.getFood() > 0 && !westTile.contains(EType.ANTHILL))
+          chanceToGoWest += 100000000;
+      }
+      else{
+        chanceToGoWest += westTile.getPheromoneRate(homePheromone) * goHomeFactor;
+      }
     }
     /* Calculate chances */
     int totalChance = chanceToGoNorth + chanceToGoEast + chanceToGoSouth + chanceToGoWest;
@@ -150,12 +196,75 @@ public class Worker extends AntRole {
       if(westTile != null) chanceToGoWest = 10;
       totalChance = chanceToGoNorth + chanceToGoEast + chanceToGoSouth + chanceToGoWest;
     }
-    double northRate = chanceToGoNorth / (double) totalChance;
-    double eastRate = chanceToGoEast / (double) totalChance;
-    double southRate = chanceToGoSouth / (double) totalChance;
-    double westRate = chanceToGoWest / (double) totalChance;
-    double rng = Math.random();
+    if(home){
+      if(northTile != null && northTile.equals(ant.getHome())) {
+        ant.getTile().moveTo(ant, northTile);
+        return;
+      }
+      else if(eastTile != null && eastTile.equals(ant.getHome())) {
+        ant.getTile().moveTo(ant, eastTile);
+        return;
+      }
+      else if(southTile != null && southTile.equals(ant.getHome())){
+        ant.getTile().moveTo(ant, southTile);
+        return;
+      }
+      else if(westTile != null && westTile.equals(ant.getHome())) {
+        ant.getTile().moveTo(ant, westTile);
+        return;
+      }
+
+    }
     this.fromTile = ant.getTile();
+    moveToTileByChance(ant, chanceToGoNorth, chanceToGoEast, chanceToGoSouth, chanceToGoWest);
+    if (!home && this.fromTiles.size() > 10) {
+      this.fromTiles.remove(1);
+    }
+  }
+
+  public void bringFood(Ant ant){
+    Tile northTile = ant.getTile().getNorthTile();
+    Tile eastTile = ant.getTile().getEastTile();
+    Tile southTile = ant.getTile().getSouthTile();
+    Tile westTile = ant.getTile().getWestTile();
+
+    Pheromone homePheromone = ant.getSpecies().getHomePheromone();
+
+    Tile max = null;
+    max = morePheromoneTile(max, westTile, homePheromone);
+    max = morePheromoneTile(max, northTile, homePheromone);
+    max = morePheromoneTile(max, eastTile, homePheromone);
+    max = morePheromoneTile(max, southTile, homePheromone);
+   if(max != null){
+     ant.getTile().moveTo(ant, max);
+   }
+   else{
+     moveToTileByChance(ant, 1, 1, 1, 1);
+   }
+  }
+
+  public Tile morePheromoneTile(Tile tileA, Tile tileB, Pheromone p){
+    if (tileA == null) {
+      return tileB;
+    }
+    if(tileB == null){
+      return tileA;
+    }
+    if(tileA.getPheromoneRate(p) <= tileB.getPheromoneRate(p)) return tileB;
+    else return tileA;
+  }
+
+  public void moveToTileByChance(Ant ant, int north, int east, int south, int west){
+    Tile northTile = ant.getTile().getNorthTile();
+    Tile eastTile = ant.getTile().getEastTile();
+    Tile southTile = ant.getTile().getSouthTile();
+    Tile westTile = ant.getTile().getWestTile();
+    double total = north + east + south + west;
+    double northRate = north /  total;
+    double eastRate = east / total;
+    double southRate = south /  total;
+    double westRate = west /  total;
+    double rng = Math.random();
     if (rng < northRate) {
       ant.getTile().moveTo(ant, northTile);
       this.fromTiles.add(northTile);
@@ -168,9 +277,6 @@ public class Worker extends AntRole {
     } else {
       ant.getTile().moveTo(ant, westTile);
       this.fromTiles.add(westTile);
-    }
-    if (this.fromTiles.size() > 15) {
-      this.fromTiles.remove(1);
     }
   }
 

@@ -46,4 +46,8 @@ public abstract class AntRole extends Role {
       }
     }
   }
+
+  protected void moveTowardHome2(Ant ant) {
+
+  }
 }

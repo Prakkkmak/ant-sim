@@ -13,6 +13,7 @@ public class Grid extends GBounded {
 
   private Square[][] grid;
   private Simulation simulation;
+  private int pheromoneToShow;
 
   public Grid(Simulation simulation) {
     this.simulation = simulation;
@@ -33,7 +34,7 @@ public class Grid extends GBounded {
     }
   }
   private Color pheromoneColor(int pheromoneRate){
-    pheromoneRate /= 4;
+    pheromoneRate /= 200;
     if (pheromoneRate < 0) {
       pheromoneRate = 0;
     }
@@ -55,7 +56,7 @@ public class Grid extends GBounded {
   public void update() {
     for (int i = 0; i < this.grid.length; i++) {
       for (int j = 0; j < this.grid[i].length; j++) {
-        int pheromoneRate = this.simulation.getWorld().getPheromoneConcentration(i, j);
+        int pheromoneRate = this.simulation.getWorld().getPheromoneConcentration(i, j, this.getPheromoneToShow());
         int foodRate = this.simulation.getWorld().getFoodConcentration(i, j);
         Color c;
         if(foodRate > 0){
@@ -73,6 +74,8 @@ public class Grid extends GBounded {
           this.grid[i][j].removeIcon();
         } else if (content == 4) {
           this.grid[i][j].addAnt();
+        } else if (content == 8){
+          this.grid[i][j].addPrey();
         } else if(content == 9){
           this.grid[i][j].addGarbage();
         } else if (content == 10) {
@@ -80,6 +83,14 @@ public class Grid extends GBounded {
         }
       }
     }
+  }
+
+  public int getPheromoneToShow() {
+    return pheromoneToShow;
+  }
+
+  public void setPheromoneToShow(int pheromoneToShow) {
+    this.pheromoneToShow = pheromoneToShow;
   }
 
   private int getTileSize() {

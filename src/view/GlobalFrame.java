@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 public class GlobalFrame extends JFrame {
     private Grid grid;
     private DataPanel dataPanel;
+
     public GlobalFrame(Simulation simulation){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(700, 700);
@@ -36,7 +37,7 @@ public class GlobalFrame extends JFrame {
             }
         });
         JLabel text = new JLabel("Refresh Rate : ");
-        JSlider slider = new JSlider(0, 30);
+        JSlider slider = new JSlider(0, 30,1);
         slider.setMajorTickSpacing(5);
         slider.setMinorTickSpacing(1);
         slider.setPaintLabels(true);
@@ -47,10 +48,23 @@ public class GlobalFrame extends JFrame {
                 simulation.setMinutesPerTick(slider.getValue());
             }
         });
+        JLabel text2 = new JLabel("Pheromone : ");
+        JSlider sliderPheromone = new JSlider(JSlider.HORIZONTAL, 0, 5, 1);
+        sliderPheromone.setMajorTickSpacing(1);
+        sliderPheromone.setPaintTicks(true);
+        sliderPheromone.setPaintLabels(true);
+        sliderPheromone.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                grid.setPheromoneToShow(sliderPheromone.getValue());
+            }
+        });
         createColonyPanel.add(send);
         createColonyPanel.add(reset);
         createColonyPanel.add(text);
         createColonyPanel.add(slider);
+        createColonyPanel.add(text2);
+        createColonyPanel.add(sliderPheromone);
 
         this.add(createColonyPanel, BorderLayout.SOUTH);
         this.add(this.dataPanel);

@@ -17,13 +17,13 @@ public class SpeciesFactory {
     species.setGrowthDays(new Egg(), 5);
     species.setGrowthDays(new Larva(), 10);
     species.setGrowthDays(new Nymph(), 15);
-    species.setGrowthDays(new Mature(), 100000);
+    species.setGrowthDays(new Mature(), 365 * 2);
     species.setRatio(new Worker(), 65);
     species.setRatio(new Soldier(), 20);
     species.setRatio(new Fly(), 15);
-    species.setPheromoneDropRate(2);
-    species.setRandomMovementRate(1);
-    species.setLinearMovementRate(1);
+    species.setPheromoneDropRate(1000);
+    species.setRandomMovementRate(500);
+    species.setLinearMovementRate(100);
     species.setNumberOfTimesWeightCarried(10);
     species.setNumberOfEggPerDay(10);
     return species;

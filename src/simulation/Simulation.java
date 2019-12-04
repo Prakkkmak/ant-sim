@@ -3,7 +3,6 @@ package simulation;
 import java.util.Date;
 import model.world.World;
 import view.GlobalFrame;
-import view.View;
 
 public class Simulation {
 

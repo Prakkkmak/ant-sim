@@ -5,6 +5,7 @@ import model.data.Species;
 import model.developments.Egg;
 import model.entities.Ant;
 import model.entities.Anthill;
+import model.entities.Prey;
 import model.enums.EType;
 import model.factories.AntFactory;
 import model.factories.SpeciesFactory;
@@ -13,6 +14,7 @@ import model.interfaces.ITickable;
 import model.roles.Soldier;
 import model.roles.Worker;
 import model.visitors.AntCounterVisitor;
+import model.visitors.FoodCounterVisitor;
 
 /**
  * The model.world is where the sim append. It's a list of tiles.
@@ -82,6 +84,10 @@ public class World implements ITickable {
   public int getPheromoneConcentration(int x, int y) {
     return this.tiles[x][y].getPheromoneConcentration();
   }
+
+  public int getPheromoneConcentration(int x, int y, int i) {
+    return this.tiles[x][y].getPheromoneRate(i);
+  }
   public int getFoodConcentration(int x, int y){
     return this.tiles[x][y].getFood();
   }
@@ -147,7 +153,15 @@ public class World implements ITickable {
   public void createFood(int x, int y, int amount){
     this.tiles[x][y].addFood(amount);
   }
-
+  public void randomPrey(){
+    double r = Math.random();
+    double chanceToDropFood = (1 - 1 / (double)(this.getSizeX() * this.getSizeY())) / 1000;
+    if(r < chanceToDropFood){
+      int posX = (int)(Math.random() * this.getSizeX());
+      int posY = (int)(Math.random() * this.getSizeY());
+      this.tiles[posX][posY].addEntity(new Prey(this.tiles[posX][posY]));
+    }
+  }
   public void randomFeeder(){
     double r = Math.random();
     double chanceToDropFood = (1 - 1 / (double)(this.getSizeX() * this.getSizeY())) / 500;
@@ -171,7 +185,9 @@ public class World implements ITickable {
         this.tiles[i][j].onMinutePass(tick);
       }
     }
+    //TODO create spawner class
     randomFeeder();
+    randomPrey();
   }
 
   /**
@@ -206,6 +222,7 @@ public class World implements ITickable {
     }
     return visitor.getOutside();
   }
+
   public Map<EType, Integer> getInsides(){
     AntCounterVisitor visitor = new AntCounterVisitor();
     for (Tile[] tiles : this.tiles) {
@@ -229,6 +246,26 @@ public class World implements ITickable {
     }
     //return visitor.getAntCount();
     return 0;
+  }
+
+  public int getFoodInsides(){
+    FoodCounterVisitor visitor = new FoodCounterVisitor();
+    for (Tile[] tiles : this.tiles) {
+      for (Tile tile : tiles) {
+        tile.accept(visitor);
+      }
+    }
+    return visitor.getInsideFood();
+  }
+
+  public int getFoodOutsides(){
+    FoodCounterVisitor visitor = new FoodCounterVisitor();
+    for (Tile[] tiles : this.tiles) {
+      for (Tile tile : tiles) {
+        tile.accept(visitor);
+      }
+    }
+    return visitor.getOutsideFood();
   }
 
   /**

@@ -90,7 +90,6 @@ public class Ant extends EntityTile {
 
     public void setStamina(int newStamina) {
         this.stamina = newStamina;
-        if (stamina < 0) this.state = new Garbage();
     }
 
     public int getWeight() {
@@ -112,6 +111,10 @@ public class Ant extends EntityTile {
 
     public int getFood() {
         return this.food;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
     }
 
     public void decreaseFood(int amount) {
@@ -170,8 +173,12 @@ public class Ant extends EntityTile {
         if (this.getFood() < 0) {
             this.state = new Garbage();
         }
+        if (this.getStamina() < 0) {
+            this.state = new Garbage();
+        }
         if (this.getType().equals(EType.EGG) || this.getType().equals(EType.NYMPH)) return;
         decreaseFood();
+        if (this.getType().equals(EType.LARVA) || this.getType().equals(EType.GARBAGE)) return;
         decreaseStamina();
     }
 

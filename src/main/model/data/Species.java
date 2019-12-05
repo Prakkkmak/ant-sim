@@ -57,6 +57,8 @@ public class Species {
 
     private int numberOfEggPerDay;
 
+    private int foodConsumption;
+
     /**
      * Default species constructor.
      */
@@ -65,6 +67,7 @@ public class Species {
         this.weight = weight;
         this.territory = territory;
         this.stamina = stamina;
+        this.foodConsumption = (this.getWeight() / 4);
         this.pheromoneDropRate = 0;
         this.randomMovementRate = 0;
         this.linearMovementRate = 0;
@@ -88,7 +91,11 @@ public class Species {
     }
 
     public int getFoodConsumption() {
-        return (this.getWeight() / 4);
+        return foodConsumption;
+    }
+
+    public void setFoodConsumption(int newConsumption){
+        this.foodConsumption = newConsumption;
     }
 
     public int getTerritory() {

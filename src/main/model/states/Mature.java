@@ -6,8 +6,14 @@ import main.model.entities.Ant;
 import main.model.enums.EType;
 import main.model.roles.Worker;
 
+/**
+ * Most of ants are mature. It's the main state where an ant can be worker..
+ */
 public class Mature extends State {
 
+    /**
+     * The role of the ant. Only mature ants can have a role.
+     */
     private AntRole antRole;
 
     public Mature() {
@@ -15,6 +21,10 @@ public class Mature extends State {
         this.antRole = new Worker();
     }
 
+    /**
+     * Evolve to garbage.
+     * @return The new Garbage.
+     */
     @Override
     public State evolve() {
         return new Garbage();
@@ -41,7 +51,7 @@ public class Mature extends State {
                 ant.consume(ant.getSpecies().getFoodConsumption());
             }
         }
-        antRole.action(ant);
+        if(antRole != null) this.antRole.action(ant);
     }
 
     @Override

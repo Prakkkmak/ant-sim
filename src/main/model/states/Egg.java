@@ -16,7 +16,7 @@ public class Egg extends State {
     public State evolve() {
         return new Larva();
     }
-    
+
     @Override
     public EType getType() {
         return EType.EGG;

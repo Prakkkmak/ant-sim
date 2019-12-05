@@ -28,14 +28,12 @@ public class Anthill extends EntityTile {
         if (ageDay <= lastEggingDay) {
             return;
         }
-        System.out.println("Début de la gestation");
         for (int i = 0; i < this.getSpecies().getNumberOfEggPerDay(); i++) {
             AntFactory antFactory = new AntFactory(this.getSpecies());
             Tile antTile = this.getTile();
             Ant egg = antFactory.createAnt(antTile, new Egg());
             antTile.addEntity(egg);
             this.addAnt(egg);
-            System.out.println("Nouvel oeuf");
         }
         lastEggingDay = ageDay;
     }

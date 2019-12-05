@@ -56,6 +56,8 @@ public class DataPanel extends JPanel {
         else text += "NYMPH : 0<br>";
         if (infoInside.get(EType.WORKER) != null) text += "WORKER :" + infoInside.get(EType.WORKER) + "<br>";
         else text += "WORKER : 0<br>";
+        if (infoInside.get(EType.GARBAGE) != null) text += "GARBAGE :" + infoInside.get(EType.GARBAGE) + "<br>";
+        else text += "GARBAGE : 0<br>";
         text += "Food :" + infoFoodInside + "<br>";
         this.textLabel.setText(text);
         //jLabel.equals("Workers count = " + world.getAntCount());

@@ -3,7 +3,7 @@ package main.model.factories;
 import main.model.abstracts.AntRole;
 import main.model.abstracts.State;
 import main.model.data.Species;
-import main.model.developments.Mature;
+import main.model.states.Mature;
 import main.model.entities.Ant;
 import main.model.entities.Anthill;
 import main.model.enums.EType;

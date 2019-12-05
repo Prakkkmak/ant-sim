@@ -1,10 +1,10 @@
 package main.model.factories;
 
 import main.model.data.Species;
-import main.model.developments.Egg;
-import main.model.developments.Larva;
-import main.model.developments.Mature;
-import main.model.developments.Nymph;
+import main.model.states.Egg;
+import main.model.states.Larva;
+import main.model.states.Mature;
+import main.model.states.Nymph;
 import main.model.roles.Fly;
 import main.model.roles.Soldier;
 import main.model.roles.Worker;

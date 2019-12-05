@@ -3,7 +3,7 @@ package main.model.entities;
 import main.model.abstracts.EntityTile;
 import main.model.data.AnthillInfo;
 import main.model.data.Species;
-import main.model.developments.Egg;
+import main.model.states.Egg;
 import main.model.enums.EType;
 import main.model.factories.AntFactory;
 import main.model.interfaces.IVisitor;

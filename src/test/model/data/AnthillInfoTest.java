@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import main.model.data.AnthillInfo;
-import main.model.developments.Egg;
+import main.model.states.Egg;
 import main.model.entities.Ant;
 import main.model.enums.EType;
 import main.model.factories.AntFactory;

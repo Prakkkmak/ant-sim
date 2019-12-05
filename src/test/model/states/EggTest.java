@@ -1,9 +1,8 @@
-package test.model.developments;
+package test.model.states;
 
 import main.model.abstracts.State;
-import main.model.data.AnthillInfo;
-import main.model.developments.Egg;
-import main.model.developments.Larva;
+import main.model.states.Egg;
+import main.model.states.Larva;
 import main.model.enums.EType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

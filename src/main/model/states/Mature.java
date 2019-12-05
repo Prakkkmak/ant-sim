@@ -1,4 +1,4 @@
-package main.model.developments;
+package main.model.states;
 
 import main.model.abstracts.AntRole;
 import main.model.abstracts.State;

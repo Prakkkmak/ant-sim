@@ -1,8 +1,6 @@
-package test.model.developments;
+package test.model.states;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MatureTest {
 

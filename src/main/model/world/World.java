@@ -1,7 +1,7 @@
 package main.model.world;
 
 import main.model.data.Species;
-import main.model.developments.Egg;
+import main.model.states.Egg;
 import main.model.entities.Ant;
 import main.model.entities.Anthill;
 import main.model.enums.EType;

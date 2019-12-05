@@ -42,8 +42,8 @@ public class Grid extends GBounded {
             return new Color(255, 255, 255);
         }
         if (this.getPheromoneToShow() == 0) {
-            return new Color(200, 255, 255 - pheromoneRate);
-        } else return new Color(255 - pheromoneRate, 255, 200);
+            return new Color(250, 255, 255 - pheromoneRate);
+        } else return new Color(255 - pheromoneRate, 255, 250);
 
     }
 

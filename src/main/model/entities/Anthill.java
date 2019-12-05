@@ -15,6 +15,11 @@ public class Anthill extends EntityTile {
     private Species species;
     private AnthillInfo infos;
 
+    /**
+     * Default constructor
+     * @param tile Position of the AntHill on the grid
+     * @param species Species of the AntHill
+     */
     public Anthill(Tile tile, Species species) {
         super(tile);
         this.lastEggingDay = 0;
@@ -22,10 +27,12 @@ public class Anthill extends EntityTile {
         this.infos = new AnthillInfo();
     }
 
-
+    /**
+     * Create a new Egg depends on time.
+     */
     public void createEgg() {
         int ageDay = this.getAge().getDay();
-        if (ageDay <= lastEggingDay) {
+        if (ageDay <= this.getLastEggingDay()) {
             return;
         }
         for (int i = 0; i < this.getSpecies().getNumberOfEggPerDay(); i++) {
@@ -35,7 +42,7 @@ public class Anthill extends EntityTile {
             antTile.addEntity(egg);
             this.addAnt(egg);
         }
-        lastEggingDay = ageDay;
+        this.setLastEggingDay(ageDay);
     }
 
     public int getLastEggingDay() {
